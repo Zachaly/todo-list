@@ -1,26 +1,50 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container has-background-grey-lighter p-2">
+      <div class="columns mt-2">
+        <div class="column is-6">
+          <button class="button is-success mb-2" @click="addingTask = true">
+            Add new Task
+          </button>
+          <TaskList :tasks="tasks" @remove-task="removeTask"/>
+        </div>
+        <div class="column is-6" v-if="addingTask">
+          <AddTask :id="lastId" @add-task="addTask"/>
+        </div>
+      </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TaskList from "./components/TaskList.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+    name: "App",
+    data() {
+        return {
+            tasks: [],
+            addingTask: false,
+            lastId: 1,
+        };
+    },
+    components: { TaskList, AddTask },
+    methods: {
+      addTask(task){
+        const startDate = new Date(task.startDate);
+        const endDate = new Date(task.endDate);
+
+        if(startDate > endDate){
+          alert('End date cannot be earlier than start date!')
+          return;
+        }
+
+        this.tasks.push(task);
+        this.lastId++;
+        this.addingTask = false;
+      },
+      removeTask(id){
+        this.tasks = this.tasks.filter(task => task.id !== id);
+      }
+    }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
