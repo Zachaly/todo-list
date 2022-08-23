@@ -23,6 +23,7 @@
     </div>
     <div class="field">
         <button class="button is-success" @click="$emit('add-task', taskModel)">Add task</button>
+        <button class="button is-danger ml-1" @click="$emit('cancel-adding-task')">Cancel</button>
     </div>
 </template>
 
@@ -62,6 +63,6 @@ export default{
             return `${year}-${month}-${day}`;
         },
     },
-    emits: ['add-task']
+    emits: ['add-task', 'cancel-adding-task']
 }
 </script>

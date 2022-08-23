@@ -8,7 +8,7 @@
           <TaskList :tasks="tasks" @remove-task="removeTask"/>
         </div>
         <div class="column is-6" v-if="addingTask">
-          <AddTask :id="lastId" @add-task="addTask"/>
+          <AddTask :id="lastId" @add-task="addTask" @cancel-adding-task='addingTask = false'/>
         </div>
       </div>
   </div>
